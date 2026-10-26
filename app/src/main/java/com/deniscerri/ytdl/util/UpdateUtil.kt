@@ -40,6 +40,8 @@ class UpdateUtil(var context: Context) {
 
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     fun tryGetNewVersion() : Result<GithubRelease> {
+        // Fork: update check disabled (it queried the original repo)
+        if (true) return Result.failure(Error(context.getString(R.string.you_are_in_latest_version)))
         try {
             val skippedVersions = sharedPreferences.getString("skip_updates", "")?.split(",")?.distinct()?.toMutableList() ?: mutableListOf()
             val res = getGithubReleases()
